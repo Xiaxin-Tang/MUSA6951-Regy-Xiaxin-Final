@@ -18,8 +18,17 @@ GTFS (General Transit Feed Specification) is a standardized format for organizin
 Although GTFS was not used directly in class, it offers significant value for geospatial analysis — especially in the U.S. context. Over 2,500 transit agencies worldwide publish GTFS feeds, and as of Fall 2023, it has become a required reporting format for the National Transit Database administered by the Federal Transit Administration. This widespread adoption makes GTFS a robust, scalable tool for analyzing transit accessibility.
 
 For this project, I will use the SEPTA GTFS feed (available here, last updated March 2025) to compute accessibility scores for locations across Philadelphia. These scores will serve as ground-truth labels for training the CNN model.
+
 **2. NAIP Imagery**
 NAIP image tiles over Philadelphia will be used as the input data for the CNN. Each image patch will be labeled based on its transit accessibility class (e.g., high, medium, low) derived from GTFS.
+
+### Methodology 
+1. Label Generation: GTFS data will assign accessibility scores to different geographic patches. These scores will then be converted into class labels (e.g., 0 = low access, 1 = high access). 
+Transit accessibility will be calculated at the patch level (e.g., 256×256m) using two parameters.
+2. Image Patching: Satellite images will be cut into tiles corresponding to each labeled patch. These will form the training dataset for the model.
+3. Model Architecture: A custom-built Convolutional Neural Network (CNN), based on models developed in earlier assignments, will be trained to classify satellite image patches into transit accessibility 
+classes. The model will be trained using PyTorch.
+4. Evaluation: Model performance will be evaluated using accuracy and confusion matrices on a validation set. Predictions will be applied to unlabeled areas to explore generalization if time allows.
 
 ### Result ###
 A CNN model with a test accuracy of 80.45% that can be used to predict bus ridership based on landuse imageries.
